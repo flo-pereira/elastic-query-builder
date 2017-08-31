@@ -1,0 +1,21 @@
+{
+  "name": "elastic-query-builder",
+  "version": "1.0.0",
+  "description": "Query builder for elastic search",
+  "main": "lib/index.js",
+  "author": "Florian Pereira",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.6.0"
+  },
+  "dependencies": {
+    "deepmerge": "^1.5.1",
+    "ramda": "^0.24.1"
+  },
+  "scripts": {
+    "build": "babel src -d lib"
+  }
+}
