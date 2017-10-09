@@ -36,9 +36,7 @@ class QueryBuilder {
     customFilters: {},
   };
 
-  getTerm() {
-    return this.query.term.term;
-  }
+  getTerm = () => this.query.term.term;
 
   getFilters() {
     const filters = {};
@@ -75,16 +73,14 @@ class QueryBuilder {
 
     for (let filterKey in this.query.customFilters) {
       if (this.query.customFilters.hasOwnProperty(filterKey)) {
-        filters[filterKey] = { type: 'exclude', name: filterKey };
+        filters[filterKey] = { type: 'custom', name: filterKey };
       }
     }
 
     return filters;
   }
 
-  getSort() {
-    return this.query.sort;
-  }
+  getSort = () => this.query.sort;
 
   termQuery(term, fields = ['id^5']) {
     this.query.term.term = term;
@@ -149,9 +145,7 @@ class QueryBuilder {
     return this;
   }
 
-  getQuery() {
-    return this.query;
-  }
+  getQuery = () => this.query;
 
   setSize(size = 10) {
     this.query.size = size;
