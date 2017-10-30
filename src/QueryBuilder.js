@@ -48,7 +48,7 @@ class QueryBuilder {
           if (filterType.hasOwnProperty(filterKey)) {
             let filter = filterType[filterKey];
 
-            if (type === 'ranges') {
+            if ('ranges') {
               filters[filterKey] = {
                 type,
                 from: filter.from,
@@ -73,7 +73,7 @@ class QueryBuilder {
 
     for (let filterKey in this.query.customFilters) {
       if (this.query.customFilters.hasOwnProperty(filterKey)) {
-        filters[filterKey] = { type: 'custom', name: filterKey };
+        filters[filterKey] = { type: 'custom', name: filterKey, filter: { ...this.query.customFilters[filterKey] } };
       }
     }
 
@@ -98,17 +98,18 @@ class QueryBuilder {
 
   removeFilter(type, field) {
     try {
-      delete this.query.filters[type][field];
+      if (field in this.query.filters[type]) {
+        delete this.query.filters[type][field];
 
-      return this;
-    } catch (e) {
-    }
+        return this;
+      }
+    } catch (e) {}
 
     try {
-      delete this.query.customFilters[field];
-    } catch (e) {
-    }
-
+      if (field in this.query.customFilters) {
+        delete this.query.customFilters[field];
+      }
+    } catch (e) {}
 
     return this;
   }
@@ -175,7 +176,7 @@ class QueryBuilder {
     for (let key in this.query.filters.ranges) {
       if (this.query.filters.ranges.hasOwnProperty(key)) {
         let range = this.query.filters.ranges[key];
-        must[`range_${range.field}`] = addRangeFilter(range.field, range.from, range.to);
+        must[`range_${range.field}`] = addRangeFilter(range.field, range.from, range.to, range.type);
       }
     }
 

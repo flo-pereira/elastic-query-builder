@@ -158,7 +158,31 @@ const addTermAgg = (name, field, filters = {}, size = 50) => ({
   }, filters),
 });
 
-const addRangeFilter = (field, min, max) => {
+const addDateFilter = (field, min, max) => {
+  let bounds = {
+    'from': `now+${min}d/d`,
+  };
+
+  if (null !== max) {
+    bounds.to = `now+${max}d/d`;
+  }
+
+  return ({
+    'date_range': {
+      'field': field,
+      'ranges': [
+        bounds
+      ]
+    },
+  });
+};
+
+const addRangeFilter = (field, min, max, type = 'ranges') => {
+
+  if (type === 'date_range') {
+    return addDateFilter(field, min, max);
+  }
+
   let bounds = {
     'gte': min,
   };
