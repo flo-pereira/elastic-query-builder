@@ -48,7 +48,7 @@ class QueryBuilder {
           if (filterType.hasOwnProperty(filterKey)) {
             let filter = filterType[filterKey];
 
-            if ('ranges') {
+            if (type === 'ranges') {
               filters[filterKey] = {
                 type,
                 from: filter.from,
